@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { Card } from './interfaces/card.interface'
-import { Model } from 'mongoose'
-import { InjectModel } from '@nestjs/mongoose'
-import { CreateCardDto } from './dto/create.card.dto';
+import { Card } from './interfaces/card.interface';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class CardsService {
@@ -26,7 +25,7 @@ export class CardsService {
     }
 
     async delete(id: string): Promise<Card> {
-        return await this.cardModel.findOneByIdAndRemove(id)
+        return await this.cardModel.findByIdAndRemove(id)
     }
 
 }
