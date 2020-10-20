@@ -9,26 +9,26 @@ export class CardsController {
 
     @Get()
     findAll(): Promise<Card[]> {
-        return this.cardsService.findAll()
+        return this.cardsService.findAll();
     }
 
     @Get(':id')
     findOne(@Param('id') id): Promise<Card> {
-        return this.cardsService.findOne(id)
+        return this.cardsService.findOne(id);
     }
 
     @Post()
     create(@Body() createCardDto: CreateCardDto): Promise<Card> {
-        return this.cardsService.create(createCardDto)
+        return this.cardsService.create(createCardDto);
     }
 
     @Put(':id')
     update(@Body() updateCardDto: CreateCardDto, @Param('id') id): Promise<Card> {
-        return this.cardsService.update(id, updateCardDto)
+        return this.cardsService.update(id, updateCardDto);
     }
 
     @Delete(':id')
     delete(@Param('id') id): Promise<Card> {
-        return this.cardsService.delete(id)
+        return this.cardsService.delete(id);
     }
 }

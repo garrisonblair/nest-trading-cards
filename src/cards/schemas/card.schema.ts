@@ -5,5 +5,11 @@ export const CardSchema = new mongoose.Schema({
     description: String,
     class: String,
     type: String,
-    level: String
+    level: String,
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
+
+module.exports = mongoose.model('Card', CardSchema)
