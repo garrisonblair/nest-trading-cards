@@ -5,7 +5,7 @@ export const CardSchema = new mongoose.Schema({
     description: String,
     class: String,
     type: String,
-    level: String,
+    level: Number,
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
