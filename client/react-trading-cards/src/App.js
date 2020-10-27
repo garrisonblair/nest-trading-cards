@@ -36,6 +36,28 @@ class App extends Component {
     .then(res => this.setState({ cards: [...this.state.cards, res.data]}));
   }
 
+  getUpdatedCardData = (_id, resData) => {
+      var update = require('immutability-helper');
+      var cardIndex = this.state.cards.findIndex(function(c) { 
+        return c._id === _id; 
+      });
+      var newCardData = update(this.state.cards, {
+        $splice: [[cardIndex, 1, resData]]
+      });
+      return newCardData;
+  }
+
+  updateCard = (_id, name, description, _class, type, level) => {
+    Axios.put(`http://localhost:3000/cards/${_id}`, {
+      name: name,
+      description: description,
+      class: _class,
+      type: type,
+      level: level
+    })
+    .then(res => this.setState({ cards: this.getUpdatedCardData(_id, res.data)}))
+  }
+
   deleteCard = (_id) => {
     // TODO: delete card in server
     Axios.delete(`http://localhost:3000/cards/${_id}`)
@@ -50,7 +72,7 @@ class App extends Component {
             <Header />
             <Route exact path="/" render={props => (
               <React.Fragment>
-                <Cards cards={this.state.cards} addCard={this.addCard} deleteCard={this.deleteCard} />
+                <Cards cards={this.state.cards} addCard={this.addCard} updateCard={this.updateCard} deleteCard={this.deleteCard} />
               </React.Fragment>
             )} />
             <Route path="/cards/create" render={(props) => (

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Form, Input, Button, Select, InputNumber } from 'antd';
+import 'antd/dist/antd.css';
 
 export class CreateCard extends Component {
     state = {
@@ -10,7 +12,21 @@ export class CreateCard extends Component {
         level: 0
     };
 
-    onChange = (e) => this.setState({ [e.target.name]: e.target.value })
+    get initialState() {
+        return {
+            name: '',
+            description: '',
+            class: '',
+            type: '',
+            level: 0
+        }
+    }
+
+    resetForm = () => this.setState(this.initialState);
+
+    onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+    onChangeLevel = (level) => this.setState({level})
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -21,71 +37,47 @@ export class CreateCard extends Component {
             this.state.type,
             this.state.level
         );
+        this.resetForm();
     }
 
     render() {
         return (
-            <form onSubmit={ this.onSubmit } style={{ display: "flex" }}>
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Card name..."
-                    style={{ flex: '10', padding: '5px' }}
-                    value={ this.state.name }
-                    onChange={ this.onChange }
-                />
-                <input
-                    type="text"
-                    name="description"
-                    placeholder="Create description..."
-                    style={{ flex: '10', padding: '5px' }}
-                    value={ this.state.description }
-                    onChange={ this.onChange }
-                />
-                <label>
-                    Select a class:
-                    <select name="class" value={this.state.class} onChange={this.onChange}>
-                        <option value="" />
-                        <option value="hero">Hero</option>
-                        <option value="medic">Medic</option>
-                        <option value="morale_boost">Morale Boost</option>
-                        <option value="muster">Muster</option>
-                        <option value="spy">Spy</option>
-                        <option value="tight_bond">Tight Bond</option>
-                    </select>
-                </label>
-                <label>
-                    Select a type:
-                    <select name="type" value={this.state.type} onChange={this.onChange}>
-                        <option value="" />
-                        <option value="close">Close Combat</option>
-                        <option value="ranged">Ranged Combat</option>
-                        <option value="siege">Siege</option>
-                    </select>
-                </label>
-                <label>
-                    Select a Level
-                    <select name="level" value={this.state.level} onChange={this.onChange}>
-                        <option value={0}>0</option>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        <option value={5}>5</option>
-                        <option value={6}>6</option>
-                        <option value={7}>7</option>
-                        <option value={8}>8</option>
-                        <option value={9}>9</option>
-                        <option value={10}>10</option>
-                    </select>
-                </label>
-                <input
-                    type="submit"
-                    value="submit"
-                    className="btn"
-                    style={{ flex: '1' }}
-                />
-            </form>
+            <Form>
+                <Form.Item label="Name">
+                    <Input name="name" value={this.state.name} placeholder="Card name..." onChange={this.onChange}/>
+                </Form.Item>
+                <Form.Item label="Description">
+                    <Input name="description" value={this.state.description} placeholder="Card descriptiion..." onChange={this.onChange}/>
+                </Form.Item>
+                <Form.Item label="Class">
+                    <Select>
+                        <Select.Option name="class" onChange={this.onChange} value="Hero">Hero</Select.Option>
+                        <Select.Option name="class" onChange={this.onChange} value="Medic">Medic</Select.Option>
+                        <Select.Option name="class" onChange={this.onChange} value="Morale Boost">Morale Boost</Select.Option>
+                        <Select.Option name="class" onChange={this.onChange} value="Muster">Muster</Select.Option>
+                        <Select.Option name="class" onChange={this.onChange} value="Spy">Spy</Select.Option>
+                        <Select.Option name="class" onChange={this.onChange} value="Tight Bond">Tight Bond</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item label="Type">
+                    <Select>
+                        <Select.Option name="type" onChange={this.onChange} value="close">Close Combat</Select.Option>
+                        <Select.Option name="type" onChange={this.onChange} value="ranged">Ranged Combat</Select.Option>
+                        <Select.Option name="type" onChange={this.onChange} value="siege">Siege</Select.Option>
+                    </Select>
+                </Form.Item>
+                <Form.Item>
+                    <InputNumber name="level" min={0} max={10} defaultValue={0} onChange={this.onChangeLevel} />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit" onClick={this.onSubmit}>
+                        Submit
+                    </Button>
+                    <Button htmlType="button" onClick={this.resetForm}>
+                        Reset
+                    </Button>
+                </Form.Item>
+            </Form>
         );
     }
 }
