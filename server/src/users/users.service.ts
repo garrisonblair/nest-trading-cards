@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './interfaces/user.interface';
+import { User, UserWithCardsRO } from './interfaces/user.interface';
 import { Card } from '../cards/interfaces/card.interface';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
@@ -21,8 +21,15 @@ export class UsersService {
         return await this.userModel.findOne({ username: username });
     }
 
-    async findUserWithCards(username: string): Promise<User> {
-        return await this.userModel.findOne({ username: username }).populate('cards');
+    async findUserWithCards(username: string): Promise<UserWithCardsRO> {
+        const user = await this.userModel.findOne({ username: username }).populate('cards');
+        const newUser = {
+            _id: user._id,
+            username: user.username,
+            cards: user.cards
+        }
+        
+        return newUser
     }
 
     async create(user: User): Promise<User> {

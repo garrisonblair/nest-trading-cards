@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
 import { UsersService } from './users.service';
-import { User } from './interfaces/user.interface';
+import { User, UserWithCardsRO } from './interfaces/user.interface';
 // import { TradeCardDto } from './dto/trade.card.dto';
 // import { Card } from '../cards/interfaces/card.interface';
 
@@ -20,7 +20,7 @@ export class UsersController {
     }
 
     @Get(':username/cards')
-    getUserWithCards(@Param('username') username): Promise<User> {
+    getUserWithCards(@Param('username') username): Promise<UserWithCardsRO> {
         return this.usersService.findUserWithCards(username)
     }
 
