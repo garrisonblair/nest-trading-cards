@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Card as AntCard, Modal, Form, Input, Button, Select, InputNumber } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 export class Card extends Component {
@@ -77,7 +77,11 @@ export class Card extends Component {
                 actions={[
                     <DeleteOutlined key="delete" onClick={this.props.deleteCard.bind(this, _id)} />,
                     <EditOutlined key="edit" onClick={this.showModal} />,
-                    <PlusOutlined key="add" onClick={this.props.addCard.bind(this, _id)} />
+                    this.props.isAdded ? (
+                        <MinusOutlined key="remove" onClick={this.props.removeCard.bind(this, _id)} />
+                    ) : (
+                        <PlusOutlined key="add" onClick={this.props.addCard.bind(this, _id)} />
+                    )
                 ]}
                 style={{ width: 250 }}
             >
@@ -137,6 +141,8 @@ Card.propTypes = {
     addCard: PropTypes.func.isRequired,
     updateCard: PropTypes.func.isRequired,
     deleteCard: PropTypes.func.isRequired,
+    isAdded: PropTypes.bool.isRequired,
+    removeCard: PropTypes.func,
 }
 
 export default Card

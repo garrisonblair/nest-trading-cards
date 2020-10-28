@@ -12,7 +12,14 @@ class Cards extends Component {
             <Row gutter={[{ xs: 8, sm: 16, md: 24, lg: 32 }, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
                 {this.props.cards.map((card) =>
                     <Col span={8} key={card._id}>
-                        <Card card={card} addCard={this.props.addCard} updateCard={this.props.updateCard} deleteCard={this.props.deleteCard} />
+                        <Card
+                            card={card}
+                            addCard={this.props.addCard}
+                            updateCard={this.props.updateCard}
+                            deleteCard={this.props.deleteCard}
+                            isAdded={this.props.isAdded}
+                            removeCard={this.props.removeCard}
+                        />
                     </Col>
                 )}
             </Row>
@@ -25,6 +32,8 @@ Cards.propTypes = {
     addCard: PropTypes.func.isRequired,
     updateCard: PropTypes.func.isRequired,
     deleteCard: PropTypes.func.isRequired,
+    isAdded: PropTypes.bool.isRequired,
+    removeCard: PropTypes.func,
 }
 
 export default Cards;

@@ -32,7 +32,6 @@ class App extends Component {
 
   addCard = (_id) => {
     axios.put(`${API_URL}users/${this.state.currentUser.username}/${_id}`)
-      .then(res => console.log('res', res))
       .catch(e => {
         console.log('e', e);
         // TODO: handle error
@@ -88,13 +87,25 @@ class App extends Component {
             <Header />
             <Route exact path="/" render={props => (
               <React.Fragment>
-                <Cards cards={this.state.cards} addCard={this.addCard} updateCard={this.updateCard} deleteCard={this.deleteCard} />
+                <Cards
+                  cards={this.state.cards}
+                  addCard={this.addCard}
+                  updateCard={this.updateCard}
+                  deleteCard={this.deleteCard}
+                  isAdded={false}
+                />
               </React.Fragment>
             )} />
             <Route path="/cards/create" render={(props) => (
               <CreateCard createCard={this.createCard} />
             )}/>
-            <Route path="/profile" component={Profile} />
+            <Route path="/profile" render={(props) => (
+              <Profile
+                addCard={this.addCard}
+                updateCard={this.updateCard}
+                deleteCard={this.deleteCard}
+              />
+            )}/>
             <Route path="/login" component={Login} />
           </div>
         </div>
