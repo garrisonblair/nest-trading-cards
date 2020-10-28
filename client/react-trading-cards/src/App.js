@@ -10,13 +10,15 @@ import About from './components/pages/About';
 
 import './App.css';
 
+const API_URL = "http://localhost:3000/";
+
 class App extends Component {
   state = {
     cards: []
   }
 
   componentDidMount() {
-    Axios.get("http://localhost:3000/cards")
+    Axios.get(`${API_URL}cards`)
       .then(res => this.setState({ cards: res.data }));
   }
 
@@ -26,7 +28,7 @@ class App extends Component {
   }
 
   createCard = (name, description, _class, type, level) => {
-    Axios.post("http://localhost:3000/cards", {
+    Axios.post(`${API_URL}cards`, {
       name,
       description,
       class: _class,
@@ -48,7 +50,7 @@ class App extends Component {
   }
 
   updateCard = (_id, name, description, _class, type, level) => {
-    Axios.put(`http://localhost:3000/cards/${_id}`, {
+    Axios.put(`${API_URL}cards/${_id}`, {
       name: name,
       description: description,
       class: _class,
@@ -60,7 +62,7 @@ class App extends Component {
 
   deleteCard = (_id) => {
     // TODO: delete card in server
-    Axios.delete(`http://localhost:3000/cards/${_id}`)
+    Axios.delete(`${API_URL}cards/${_id}`)
       .then(res => this.setState({ cards: [...this.state.cards.filter(card => card._id !== _id)]}));
   }
 
