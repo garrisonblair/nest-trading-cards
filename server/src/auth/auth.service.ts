@@ -13,7 +13,7 @@ export class AuthService {
     async validateUser(username: string, pass: string): Promise<any> {
       const user = await this.usersService.findOne(username);
       if (user) {
-        const hash = user[0].password
+        const hash = user.password
         if (bcrypt.compareSync(pass, hash)) {
             const { password, ...endResult } = user
             return endResult
@@ -24,7 +24,9 @@ export class AuthService {
 
     async login(user: any) {
       const payload = { username: user.username, sub: user.userId }
+      const loggedInUser = await this.usersService.findUserWithCards(user.username);
       return {
+        user: loggedInUser,
         access_token: this.jwtService.sign(payload),
       };
     }

@@ -7,7 +7,8 @@ export default function Header() {
             <h1>Cards</h1>
             <Link to="/" style={linkStyle}>Home</Link> | 
             <Link to="/cards/create" style={linkStyle}> New Card</Link> | 
-            <Link to="/about" style={linkStyle}> About</Link>
+            <Link to="/profile" style={linkStyle}> Profile</Link> | 
+            <Link to="/login" style={linkStyle}> Log In</Link>
         </header>
     )
 }

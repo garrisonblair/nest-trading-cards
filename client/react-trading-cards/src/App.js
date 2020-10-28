@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Axios from 'axios';
+import axios from 'axios';
 
 import Header from './components/layout/Header';
 import Cards from './components/Cards';
 import CreateCard from './components/CreateCard';
-import About from './components/pages/About';
+import Profile from './components/pages/Profile';
+import Login from './components/login/Login';
+import AuthService from './services/auth-service';
 
 import './App.css';
 
@@ -14,21 +16,31 @@ const API_URL = "http://localhost:3000/";
 
 class App extends Component {
   state = {
-    cards: []
+    cards: [],
+    currentUser: undefined
   }
 
   componentDidMount() {
-    Axios.get(`${API_URL}cards`)
+    axios.get(`${API_URL}cards`)
       .then(res => this.setState({ cards: res.data }));
+
+    const user = AuthService.getCurrentUser().user;
+    if (user) {
+      this.setState({ currentUser: user });
+    }
   }
 
   addCard = (_id) => {
-    console.log("add card to deck", _id);
-    // TODO: add card to user deck in server
-  }
+    axios.put(`${API_URL}users/${this.state.currentUser.username}/${_id}`)
+      .then(res => console.log('res', res))
+      .catch(e => {
+        console.log('e', e);
+        // TODO: handle error
+      });
+  };
 
   createCard = (name, description, _class, type, level) => {
-    Axios.post(`${API_URL}cards`, {
+    axios.post(`${API_URL}cards`, {
       name,
       description,
       class: _class,
@@ -36,6 +48,7 @@ class App extends Component {
       level
     })
     .then(res => this.setState({ cards: [...this.state.cards, res.data]}));
+    // TODO: handle error
   }
 
   getUpdatedCardData = (_id, resData) => {
@@ -50,20 +63,21 @@ class App extends Component {
   }
 
   updateCard = (_id, name, description, _class, type, level) => {
-    Axios.put(`${API_URL}cards/${_id}`, {
+    axios.put(`${API_URL}cards/${_id}`, {
       name: name,
       description: description,
       class: _class,
       type: type,
       level: level
     })
-    .then(res => this.setState({ cards: this.getUpdatedCardData(_id, res.data)}))
+    .then(res => this.setState({ cards: this.getUpdatedCardData(_id, res.data)}));
+    // TODO: handle error
   }
 
   deleteCard = (_id) => {
-    // TODO: delete card in server
-    Axios.delete(`${API_URL}cards/${_id}`)
+    axios.delete(`${API_URL}cards/${_id}`)
       .then(res => this.setState({ cards: [...this.state.cards.filter(card => card._id !== _id)]}));
+      // TODO: handle error
   }
 
   render() {
@@ -80,7 +94,8 @@ class App extends Component {
             <Route path="/cards/create" render={(props) => (
               <CreateCard createCard={this.createCard} />
             )}/>
-            <Route path="/about" component={About} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/login" component={Login} />
           </div>
         </div>
       </Router>

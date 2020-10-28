@@ -24,7 +24,7 @@ export class UsersController {
         return this.usersService.findUserWithCards(username)
     }
 
-    @Post()
+    @Post('/register')
     create(@Body() createUserDto: CreateUserDto): Promise<User> {
         return this.usersService.create(createUserDto)
     }
