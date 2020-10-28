@@ -26,7 +26,11 @@ export class CreateCard extends Component {
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-    onChangeLevel = (level) => this.setState({level})
+    onChangeClass = (_class) => this.setState({class: _class, changesMade: true});
+
+    onChangeType = (type) => this.setState({type: type, changesMade: true});
+
+    onChangeLevel = (level) => this.setState({level});
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -50,20 +54,20 @@ export class CreateCard extends Component {
                     <Input name="description" value={this.state.description} placeholder="Card descriptiion..." onChange={this.onChange}/>
                 </Form.Item>
                 <Form.Item label="Class">
-                    <Select>
-                        <Select.Option name="class" onChange={this.onChange} value="Hero">Hero</Select.Option>
-                        <Select.Option name="class" onChange={this.onChange} value="Medic">Medic</Select.Option>
-                        <Select.Option name="class" onChange={this.onChange} value="Morale Boost">Morale Boost</Select.Option>
-                        <Select.Option name="class" onChange={this.onChange} value="Muster">Muster</Select.Option>
-                        <Select.Option name="class" onChange={this.onChange} value="Spy">Spy</Select.Option>
-                        <Select.Option name="class" onChange={this.onChange} value="Tight Bond">Tight Bond</Select.Option>
+                    <Select onChange={this.onChangeClass} defaultValue={this.state.class}>
+                        <Select.Option name="class" value="Hero">Hero</Select.Option>
+                        <Select.Option name="class" value="Medic">Medic</Select.Option>
+                        <Select.Option name="class" value="Morale Boost">Morale Boost</Select.Option>
+                        <Select.Option name="class" value="Muster">Muster</Select.Option>
+                        <Select.Option name="class" value="Spy">Spy</Select.Option>
+                        <Select.Option name="class" value="Tight Bond">Tight Bond</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item label="Type">
-                    <Select>
-                        <Select.Option name="type" onChange={this.onChange} value="close">Close Combat</Select.Option>
-                        <Select.Option name="type" onChange={this.onChange} value="ranged">Ranged Combat</Select.Option>
-                        <Select.Option name="type" onChange={this.onChange} value="siege">Siege</Select.Option>
+                    <Select onChange={this.onChangeType} defaultValue={this.state.type}>
+                        <Select.Option name="type" value="close">Close Combat</Select.Option>
+                        <Select.Option name="type" value="ranged">Ranged Combat</Select.Option>
+                        <Select.Option name="type" value="siege">Siege</Select.Option>
                     </Select>
                 </Form.Item>
                 <Form.Item>
