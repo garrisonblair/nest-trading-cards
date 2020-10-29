@@ -32,6 +32,9 @@ export class Profile extends Component {
         }
     }
 
+    // TODO: update state of cards on update and delete
+    // need to figure out how/where to handle this as those functions are passed in props from App.js
+
     removeCard = (_id) => {
         console.log(`remove card ${_id} from ${this.state.user.username}`)
         // TODO: handle remove card from user deck
@@ -43,12 +46,12 @@ export class Profile extends Component {
         return (
             <Layout>
                 <Layout.Sider>
-                    <h2>Username: {user.username}</h2>
-                    <h3>Has {user.cards.length} cards in their deck</h3>
+                    <h2 style={layoutStyle}>Username: {user.username}</h2>
+                    <h3 style={layoutStyle}>Has {user.cards.length} cards in their deck</h3>
                 </Layout.Sider>
                 <Layout>
-                    <Layout.Header>
-                        <h1>{user.username}'s cards</h1>
+                    <Layout.Header style={layoutStyle}>
+                        <h1 style={layoutStyle}>{user.username}'s cards</h1>
                     </Layout.Header>
                     <Layout.Content>
                         <Cards
@@ -70,6 +73,10 @@ Profile.propTypes = {
     addCard: PropTypes.func.isRequired,
     updateCard: PropTypes.func.isRequired,
     deleteCard: PropTypes.func.isRequired,
+}
+
+const layoutStyle = {
+    color: 'white',
 }
 
 export default Profile;
