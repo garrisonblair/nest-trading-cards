@@ -24,9 +24,9 @@ class App extends Component {
     axios.get(`${API_URL}cards`)
       .then(res => this.setState({ cards: res.data }));
 
-    const user = AuthService.getCurrentUser().user;
+    const user = AuthService.getCurrentUser();
     if (user) {
-      this.setState({ currentUser: user });
+      this.setState({ currentUser: user.user });
     }
   }
 

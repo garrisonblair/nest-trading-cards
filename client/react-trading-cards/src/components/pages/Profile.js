@@ -19,9 +19,9 @@ export class Profile extends Component {
     }
 
     componentDidMount() {
-        const user = authService.getCurrentUser().user;
+        const user = authService.getCurrentUser();
         if (user) {
-            this.setState({ currentUser: user });
+            this.setState({ currentUser: user.user });
 
             axios.get(`${API_URL}profile`, { headers: authHeader() })
                 .then(res => {
